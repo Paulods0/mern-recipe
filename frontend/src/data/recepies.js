@@ -187,30 +187,7 @@
     photo:
       "https://images.pexels.com/photos/6287520/pexels-photo-6287520.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     category: "Pasta",
-  },
-  {
-    id: 9,
-    name: "Fruit Smoothie Bowl",
-    ingredients: [
-      "banana",
-      "mixed berries",
-      "Greek yogurt",
-      "granola",
-      "honey",
-    ],
-    cookingTime: "10 minutes",
-    description:
-      "Start your day with a nutritious and colorful fruit smoothie bowl.",
-    instructions: [
-      "Blend banana, mixed berries, and Greek yogurt until smooth.",
-      "Pour the smoothie into a bowl.",
-      "Top with granola and drizzle with honey.",
-      "Add additional fruits if desired.",
-    ],
-    photo:
-      "https://images.pexels.com/photos/674554/pexels-photo-674554.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    category: "Breakfast",
-  },
+  }
 ]
 
 export default recipes
