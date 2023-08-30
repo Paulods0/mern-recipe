@@ -64,14 +64,14 @@ const saveRecipe = async (req, res) => {
 
 const deleteRecipe = async (req, res) => {
   try {
-    const recipe = await Recipe.findOneAndDelete({ _id: req.params.id })
+    const recipe = await Recipe.findById( req.params.id)
     if (!recipe) {
       return res.status(404).json("Recipe not found")
     }
     if (recipe.cloudinary_id) {
       await cloudinary.uploader.destroy(recipe.cloudinary_id)
     }
-    await recipe.remove()
+    await recipe.deleteOne()
     res.status(200).json({ msg: "Successfuly Deleted" })
   } catch (error) {
     res.status(500).json({ msg: "Could not delete the recipe", error })

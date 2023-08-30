@@ -1,10 +1,10 @@
 import React from "react"
 import { InfinitySpin } from "react-loader-spinner"
 
-const Loader = () => {
+const Loader = ({color}) => {
   return (
     <div className="flex items-center justify-center">
-      <InfinitySpin width="200" color="black" />
+      <InfinitySpin width="200" color={color} />
     </div>
   )
 }

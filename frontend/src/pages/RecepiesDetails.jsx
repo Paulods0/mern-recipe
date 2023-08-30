@@ -5,13 +5,14 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { BsTrash3 } from "react-icons/bs"
 import { TbEdit } from "react-icons/tb"
-import data from '../data/recepies'
+import Loader from "../components/Loader"
 
 const RecepiesDetails = () => {
   const { id } = useParams()
   const [recipe, setRecipe] = useState({})
   const [ingreds, setIngreds] = useState([])
   const navigate = useNavigate()
+  const [isLoading, setIsloading] = useState(false)
 
   const {
     name,
@@ -30,21 +31,22 @@ const RecepiesDetails = () => {
       )
       setRecipe(response.data)
       setIngreds(response.data)
-      console.log(ingreds)
     }
     getSingleRecipe()
   }, [id])
 
   const handleEdit = async () => {}
+
   const handleDelete = async () => {
-    await axios
-      .delete(`http://localhost:4000/api/recipe/${id}`)
-      .then(() => {
+    setIsloading(true)
+    try {
+       await axios.delete(`http://localhost:4000/api/recipe/${id}`)
+       setIsloading(false)
         navigate("/")
-      })
-      .catch((error) => {
+    } catch (error) {
         console.log(error)
-      })
+    }
+   
   }
 
   return (
@@ -65,7 +67,7 @@ const RecepiesDetails = () => {
             />
           </section>
           {/**right */}
-          <section className="flex flex-col w-[700px] rounded-r items-center">
+          <section className="relative flex flex-col w-[700px] rounded-r items-center">
             <div className="w-full relative h-[calc(520px/3)] flex justify-center items-center flex-col bg-zinc-800 rounded-tr">
               <div className="absolute top-4 right-8 flex gap-4">
                 <button
@@ -136,6 +138,13 @@ const RecepiesDetails = () => {
                 </ul>
               </div>
             </div>
+            {
+              isLoading ? (
+                <div className="absolute top-0 left-0 backdrop-blur-sm w-full h-full flex items-center justify-center">
+                  <Loader color="red"/>
+                </div>
+              ) : ("")
+            }
           </section>
         </div>
       </motion.section>

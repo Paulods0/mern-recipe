@@ -161,7 +161,7 @@ const CreateRecepies = () => {
                   {recipe.ingredients.length === 0 || null || "" ? (
                     ""
                   ) : (
-                    <div className="absolute py-2 px-2 flex flex-col items-center justify-center gap-2 top-[103px] rounded-br-2xl rounded-bl-2xl rounded-tr-2xl right-6 bg-zinc-800 w-[120px] overflow-visible">
+                    <div className="absolute py-2 px-2 flex flex-col items-center justify-center gap-2 top-[103px] rounded-br-2xl rounded-bl-2xl rounded-tr-2xl right-[-28px] bg-zinc-800 w-[170px] overflow-visible">
                       <button
                         onClick={() =>
                           setRecipe({ ...recipe, ingredients: [] })
@@ -169,7 +169,7 @@ const CreateRecepies = () => {
                         type="button"
                         className="absolute w-[20px] top-[-8px] right-[-10px] h-[20px] bg-zinc-700 text-zinc-600 rounded-full flex items-center justify-center"
                       >
-                        X
+                        <span className="text-white text-center">x</span>
                       </button>
 
                       {recipe.ingredients.map((item, index) => (
@@ -180,7 +180,7 @@ const CreateRecepies = () => {
                           value={item}
                           placeholder="Add recipe"
                           onChange={(e) => handleInputChange(e, index)}
-                          className="w-full text-[12px] outline-none border-none bg-zinc-700 px-2 text-zinc-200 rounded"
+                          className="w-full text-[12px] text-center outline-none border-none bg-zinc-700 px-2 py-1 text-zinc-200 rounded"
                         />
                       ))}
                     </div>
@@ -195,14 +195,6 @@ const CreateRecepies = () => {
                       className="w-full h-full text-zinc-800 placeholder:text-zinc-800 outline-none border-none"
                     />
                   </div>
-                  <div className="w-[200px] shadow-md rounded p-2 text-[12px]">
-                    <textarea
-                      placeholder="description"
-                      name="description"
-                      onChange={handleChange}
-                      className="w-full h-full text-zinc-800 resize-none placeholder:text-zinc-800 outline-none border-none"
-                    />
-                  </div>
 
                   <button
                     className="p-2 text-white hover:scale-90 duration-300 transition-all w-[200px] text-[14px] rounded bg-zinc-800"
@@ -215,7 +207,7 @@ const CreateRecepies = () => {
                   {recipe.instructions.length === 0 || null || "" ? (
                     ""
                   ) : (
-                    <div className="absolute py-2 px-2 flex flex-col items-center justify-center gap-2 top-[259px] rounded-bl-2xl rounded-br-2xl rounded-tl-2xl left-6 bg-zinc-800 w-[120px] overflow-visible">
+                    <div className="absolute py-2 px-2 flex flex-col items-center justify-center gap-2 top-[192px] rounded-bl-2xl rounded-br-2xl rounded-tl-2xl left-[-25px] bg-zinc-800 w-[170px] overflow-visible">
                       <button
                         onClick={() =>
                           setRecipe({ ...recipe, instructions: [] })
@@ -223,7 +215,7 @@ const CreateRecepies = () => {
                         type="button"
                         className="absolute w-[20px] top-[-8px] left-[-10px] h-[20px] bg-zinc-700 text-zinc-600 rounded-full flex items-center justify-center"
                       >
-                        X
+                       <span className="text-white text-center">x</span>
                       </button>
 
                       {recipe.instructions.map((item, index) => (
@@ -234,7 +226,7 @@ const CreateRecepies = () => {
                           value={item}
                           placeholder="Add instruction"
                           onChange={(e) => handleInstructionsChange(e, index)}
-                          className="w-full text-[12px] outline-none border-none bg-zinc-700 px-2 text-zinc-200 rounded"
+                          className="w-full text-center text-[12px] outline-none border-none bg-zinc-700 px-2 py-1 text-zinc-200 rounded"
                         />
                       ))}
                     </div>
@@ -267,13 +259,13 @@ const CreateRecepies = () => {
                   Create
                 </button>
               </form>
-                {isLoading ? (
-                  <div className="absolute flex items-center justify-center w-full h-full backdrop-blur-sm top-0 left-0 ">
-                    <Loader />
-                  </div>
-                ) : (
-                  ""
-                )}
+              {isLoading ? (
+                <div className="absolute flex items-center justify-center w-full h-full backdrop-blur-sm top-0 left-0 ">
+                  <Loader color="white"/>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         )}
