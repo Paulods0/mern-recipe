@@ -6,6 +6,7 @@ import useGetUserID from "../hooks/useGetUserID"
 import { Link, useNavigate } from "react-router-dom"
 import pleaseLogin from "../assets/images/login.jpg"
 import { BiMessageSquareError } from "react-icons/bi"
+import Loader from "../components/Loader"
 
 const CreateRecepies = () => {
   const userID = useGetUserID()
@@ -23,17 +24,19 @@ const CreateRecepies = () => {
     userOwner: userID,
   })
 
+  const [isLoading, setIsloading] = useState(false)
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setRecipe({ ...recipe, [name]: value })
   }
   const handleInputChange = (e, index) => {
-    const { value,key } = e.target
+    const { value, key } = e.target
     const newRecipe = recipe.ingredients
     newRecipe[index] = value
     setRecipe({ ...recipe, ingredients: newRecipe })
   }
-  
+
   const handleInstructionsChange = (e, index) => {
     const { value } = e.target
     const newInstructions = recipe.instructions
@@ -47,43 +50,19 @@ const CreateRecepies = () => {
   const addInstructions = (e) => {
     setRecipe({ ...recipe, instructions: [...recipe.instructions, ""] })
   }
-  const logData = (e)=>{
-    e.preventDefault()
-    const formData = new FormData()
 
-    formData.append("name", recipe.name)
-    formData.append("ingredients", recipe.ingredients)
-    formData.append("instructions", recipe.instructions)
-    formData.append("cookingTime", recipe.cookingTime)
-    formData.append("category", recipe.category)
-    formData.append("userOwner", recipe.userOwner)
-    formData.append("image", recipe.image)
-
-    console.log(formData)
-    console.log(recipe)
-  }
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // const formData = new FormData()
-    // formData.append("name", recipe.name)
-    // formData.append("ingredients", recipe.ingredients)
-    // formData.append("instructions", recipe.instructions)
-    // formData.append("cookingTime", recipe.cookingTime)
-    // formData.append("category", recipe.category)
-    // formData.append("userOwner", recipe.userOwner)
-    // formData.append("image", recipe.image)
-
-    // console.log(recipe)
-
+    setIsloading(true)
     try {
       await axios.post("http://localhost:4000/api/recipe/", recipe, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
-
       console.log(recipe)
       alert("Successfuly created!")
+      setIsloading(false)
       navigate("/")
     } catch (error) {
       console.error(error)
@@ -151,7 +130,7 @@ const CreateRecepies = () => {
                 alt="recipe image"
               />
             </div>
-            <div className="bg-white">
+            <div className="bg-white relative">
               <form
                 onSubmit={handleSubmit}
                 className="flex w-[500px] mx-auto flex-col h-full items-center rounded-r relative"
@@ -288,6 +267,13 @@ const CreateRecepies = () => {
                   Create
                 </button>
               </form>
+                {isLoading ? (
+                  <div className="absolute flex items-center justify-center w-full h-full backdrop-blur-sm top-0 left-0 ">
+                    <Loader />
+                  </div>
+                ) : (
+                  ""
+                )}
             </div>
           </div>
         )}
