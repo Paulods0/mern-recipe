@@ -72,7 +72,7 @@ const deleteRecipe = async (req, res) => {
       await cloudinary.uploader.destroy(recipe.cloudinary_id)
     }
     await recipe.remove()
-    res.status(200).json({ msg: "Successfuly Deleted", deleted: recipe })
+    res.status(200).json({ msg: "Successfuly Deleted" })
   } catch (error) {
     res.status(500).json({ msg: "Could not delete the recipe", error })
   }

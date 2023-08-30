@@ -5,10 +5,12 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { BsTrash3 } from "react-icons/bs"
 import { TbEdit } from "react-icons/tb"
+import data from '../data/recepies'
 
 const RecepiesDetails = () => {
   const { id } = useParams()
   const [recipe, setRecipe] = useState({})
+  const [ingreds, setIngreds] = useState([])
   const navigate = useNavigate()
 
   const {
@@ -27,6 +29,8 @@ const RecepiesDetails = () => {
         `http://localhost:4000/api/recipe/single/${id}`
       )
       setRecipe(response.data)
+      setIngreds(response.data)
+      console.log(ingreds)
     }
     getSingleRecipe()
   }, [id])
@@ -49,11 +53,11 @@ const RecepiesDetails = () => {
         initial={{ scale: 0.7, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 65 }}
-        className="w-[1200px] h-[650px] shadow-2xl rounded mx-auto flex flex-row justify-between"
+        className="w-[1200px] h-[550px] shadow-2xl rounded mx-auto flex flex-row justify-between"
       >
         {/* {/**left */}
         <div className="flex flex-row w-[1200px]">
-          <section className=" w-[850px] h-full rounded-l">
+          <section className=" w-[950px] h-full rounded-l">
             <img
               src={image || null}
               alt={name}
@@ -61,23 +65,23 @@ const RecepiesDetails = () => {
             />
           </section>
           {/**right */}
-          <section className="flex flex-col w-[800px] rounded-r items-center">
+          <section className="flex flex-col w-[700px] rounded-r items-center">
             <div className="w-full relative h-[calc(520px/3)] flex justify-center items-center flex-col bg-zinc-800 rounded-tr">
               <div className="absolute top-4 right-8 flex gap-4">
                 <button
                   onClick={handleEdit}
-                  className="text-white flex items-center gap-2  duration-200 transition-all hover:scale-90 bg-emerald-400 p-2 rounded-xl"
+                  className="text-white text-[12px] flex items-center gap-2 duration-200 transition-all hover:scale-90 bg-emerald-400 p-2 rounded-xl"
                 >
                   <span>Edit</span>
-                  <TbEdit className="text-[17px]" />
+                  <TbEdit />
                 </button>
 
                 <button
                   onClick={handleDelete}
-                  className="text-white flex items-center gap-2 duration-200 transition-all hover:scale-90 bg-red-700 p-2 rounded-xl"
+                  className="text-white text-[12px] flex items-center gap-2 duration-200 transition-all hover:scale-90 bg-red-700 p-2 rounded-xl"
                 >
                   <span>Delete</span>
-                  <BsTrash3 className="text-[17px]" />
+                  <BsTrash3 />
                 </button>
               </div>
               <div className="">
@@ -97,15 +101,16 @@ const RecepiesDetails = () => {
                 <p className="text-white">{description} </p>
               </div>
             </div>
-            <div className="py-3 w-full flex  justify-around">
-              <div className="px-6">
+
+            <div className="py-3 w-full flex justify-around">
+              <div className="px-6 h-full">
                 <h1 className="mb-6 font-bold text-[24px] text-center">
                   INGREDIENTS
                 </h1>
-                <ul className="w-[320px] p-2 rounded shadow-md">
+                <ul className="w-[220px] p-2 rounded shadow-md">
                   {ingredients?.map((ingredient, index) => (
                     <li
-                      className="hover:shadow-md hover:bg-zinc-800 hover:text-white w-full p-2 rounded-xl text-[14px] mb-2"
+                      className="hover:shadow-md hover:bg-zinc-800 hover:text-white p-2 rounded-xl text-[14px] mb-2"
                       key={index}
                     >
                       &gt; {ingredient}
@@ -113,12 +118,13 @@ const RecepiesDetails = () => {
                   ))}
                 </ul>
               </div>
+
               <div className="h-full w-[1px] bg-zinc-200"></div>
               <div className="px-8">
                 <h1 className="mb-4 font-bold text-[24px] text-center">
                   INSTRUCTIONS
                 </h1>
-                <ul className="w-[320px] p-2 rounded shadow-md  overflow-y-scroll">
+                <ul className="w-[220px] p-2 rounded shadow-md">
                   {instructions?.map((instruction, index) => (
                     <li
                       className="hover:shadow-md hover:bg-zinc-800 hover:text-white w-full p-2 rounded-xl text-[14px] mb-2"

@@ -29,9 +29,9 @@ const loginUser = async (req, res) => {
     if (!user) {
       res.status(404).json({ message: "User doesn't exists" })
     }
-    const isPassword = bcrypt.compareSync(password, user.password)
-    if (!isPassword) {
-      res.status(404).json({ message: "Name or Password is incorrect" })
+    const isPasswordCorrect = bcrypt.compareSync(password, user.password)
+    if (!isPasswordCorrect) {
+      return res.status(404).json({ message: "Name or Password is incorrect" })
     }
     const token = jwt.sign({ id: user._id }, secretKey)
     res.status(200).json({

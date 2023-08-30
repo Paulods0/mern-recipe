@@ -22,18 +22,18 @@ const CreateRecepies = () => {
     category: "",
     userOwner: userID,
   })
-  // console.log(recipe)
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setRecipe({ ...recipe, [name]: value })
   }
   const handleInputChange = (e, index) => {
-    const { value } = e.target
+    const { value,key } = e.target
     const newRecipe = recipe.ingredients
     newRecipe[index] = value
     setRecipe({ ...recipe, ingredients: newRecipe })
   }
+  
   const handleInstructionsChange = (e, index) => {
     const { value } = e.target
     const newInstructions = recipe.instructions
@@ -47,9 +47,10 @@ const CreateRecepies = () => {
   const addInstructions = (e) => {
     setRecipe({ ...recipe, instructions: [...recipe.instructions, ""] })
   }
-  const handleSubmit = async (e) => {
+  const logData = (e)=>{
     e.preventDefault()
     const formData = new FormData()
+
     formData.append("name", recipe.name)
     formData.append("ingredients", recipe.ingredients)
     formData.append("instructions", recipe.instructions)
@@ -59,15 +60,29 @@ const CreateRecepies = () => {
     formData.append("image", recipe.image)
 
     console.log(formData)
+    console.log(recipe)
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    // const formData = new FormData()
+    // formData.append("name", recipe.name)
+    // formData.append("ingredients", recipe.ingredients)
+    // formData.append("instructions", recipe.instructions)
+    // formData.append("cookingTime", recipe.cookingTime)
+    // formData.append("category", recipe.category)
+    // formData.append("userOwner", recipe.userOwner)
+    // formData.append("image", recipe.image)
+
+    // console.log(recipe)
 
     try {
-      await axios.post("http://localhost:4000/api/recipe/", formData, {
+      await axios.post("http://localhost:4000/api/recipe/", recipe, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
 
-      console.log(formData)
+      console.log(recipe)
       alert("Successfuly created!")
       navigate("/")
     } catch (error) {
