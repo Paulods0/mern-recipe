@@ -21,7 +21,7 @@ const Search = () => {
 
   return (
     <div>
-      <div className="w-[320px] p-2 rounded-2xl justify-between bg-zinc-800 flex gap-2 items-center">
+      <div className="w-[280px] p-2 rounded-2xl justify-between bg-zinc-800 flex gap-2 items-center">
         <div>
           <BiSearch className="text-white text-[13px]" />
         </div>

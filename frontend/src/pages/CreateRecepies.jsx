@@ -60,8 +60,6 @@ const CreateRecepies = () => {
           "Content-Type": "multipart/form-data",
         },
       })
-      console.log(recipe)
-      alert("Successfuly created!")
       setIsloading(false)
       navigate("/")
     } catch (error) {
@@ -261,7 +259,7 @@ const CreateRecepies = () => {
               </form>
               {isLoading ? (
                 <div className="absolute flex items-center justify-center w-full h-full backdrop-blur-sm top-0 left-0 ">
-                  <Loader color="white"/>
+                  <Loader color="black"/>
                 </div>
               ) : (
                 ""

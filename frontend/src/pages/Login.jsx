@@ -4,12 +4,14 @@ import { UserContext } from "../context/userContext.jsx"
 import { motion } from "framer-motion"
 import axios from "axios"
 import { useCookies } from "react-cookie"
+import Loader from "../components/Loader.jsx"
 
 const Login = () => {
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
   const [_, setCookies] = useCookies(["access_token"])
   const [cookie, setUserName] = useCookies(["username"])
+  const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useNavigate()
 
@@ -20,19 +22,20 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault()
+    setIsLoading(true)
     try {
       const response = await axios.post(
         "http://localhost:4000/api/auth/login",
         data
       )
-
+      setIsLoading(false)
       setCookies("access_token", response.data.token)
       window.localStorage.setItem("userID", response.data.userID)
         
       setUserName("username", response.data.username)
       window.localStorage.setItem("username", response.data.username)
 
-      console.log(window.localStorage.getItem("username"))
+      // console.log(window.localStorage.getItem("username"))
 
       navigate("/")
       setName("")
@@ -52,7 +55,7 @@ const Login = () => {
           initial={{ x: -150, opacity: 0 }}
           exit={{ x: -150, opacity: 0 }}
           transition={{ type: "spring", stiffness: 75 }}
-          className="w-full h-[450px] bg-[] rounded flex items-center justify-center shadow-xl mb-8"
+          className="w-full h-[450px] bg-[] rounded relative flex items-center justify-center shadow-xl mb-8"
         >
           <form
             onSubmit={(e) => handleLogin(e)}
@@ -94,6 +97,13 @@ const Login = () => {
               </Link>
             </div>
           </form>
+          {isLoading ? (
+            <div className="absolute flex items-center justify-center w-full h-full backdrop-blur-sm top-0 left-0 ">
+              <Loader color="black" />
+            </div>
+          ) : (
+            ""
+          )}
         </motion.div>
       </section>
     </main>

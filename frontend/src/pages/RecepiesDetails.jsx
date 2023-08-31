@@ -10,7 +10,7 @@ import Loader from "../components/Loader"
 const RecepiesDetails = () => {
   const { id } = useParams()
   const [recipe, setRecipe] = useState({})
-  const [ingreds, setIngreds] = useState([])
+  // const [ingreds, setIngreds] = useState([])
   const navigate = useNavigate()
   const [isLoading, setIsloading] = useState(false)
 
@@ -92,7 +92,10 @@ const RecepiesDetails = () => {
               <div className="flex flex-row items-center ml-3 gap-4">
                 <div className="flex gap-2">
                   <p className="text-emerald-400">TIME: </p>
-                  <span className="text-white">{cookingTime}</span>
+                  <span className="text-white">
+                    {cookingTime}
+                    <span className="text-white">Min</span>
+                  </span>
                 </div>
                 <div className="flex gap-2">
                   <p className="text-emerald-400">CATEGORY: </p>
@@ -109,7 +112,7 @@ const RecepiesDetails = () => {
                 <h1 className="mb-6 font-bold text-[24px] text-center">
                   INGREDIENTS
                 </h1>
-                <ul className="w-[220px] p-2 rounded shadow-md">
+                <ul className="w-[220px] p-2 h-[350px] overflow-y-scroll rounded shadow-md">
                   {ingredients?.map((ingredient, index) => (
                     <li
                       className="hover:shadow-md hover:bg-zinc-800 hover:text-white p-2 rounded-xl text-[14px] mb-2"
@@ -126,7 +129,7 @@ const RecepiesDetails = () => {
                 <h1 className="mb-4 font-bold text-[24px] text-center">
                   INSTRUCTIONS
                 </h1>
-                <ul className="w-[220px] p-2 rounded shadow-md">
+                <ul className="w-[220px] p-2 rounded h-[350px] overflow-y-scroll shadow-md">
                   {instructions?.map((instruction, index) => (
                     <li
                       className="hover:shadow-md hover:bg-zinc-800 hover:text-white w-full p-2 rounded-xl text-[14px] mb-2"
@@ -138,13 +141,13 @@ const RecepiesDetails = () => {
                 </ul>
               </div>
             </div>
-            {
-              isLoading ? (
-                <div className="absolute top-0 left-0 backdrop-blur-sm w-full h-full flex items-center justify-center">
-                  <Loader color="red"/>
-                </div>
-              ) : ("")
-            }
+            {isLoading ? (
+              <div className="absolute top-0 left-0 backdrop-blur-sm w-full h-full flex items-center justify-center">
+                <Loader color="red" />
+              </div>
+            ) : (
+              ""
+            )}
           </section>
         </div>
       </motion.section>

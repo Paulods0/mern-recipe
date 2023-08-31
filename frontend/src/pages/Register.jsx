@@ -2,10 +2,12 @@ import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import axios from "axios"
+import Loader from "../components/Loader"
 
 const Register = () => {
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
   const data = {
     name,
@@ -14,9 +16,10 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault()
+    setIsLoading(true)
     try {
       await axios.post("http://localhost:4000/api/auth/register", data)
-      alert("User Registed")
+      setIsLoading(false)
       navigate("/login")
       setName("")
       setPassword("")
@@ -31,7 +34,7 @@ const Register = () => {
           animate={{ x: 0, opacity: 1 }}
           initial={{ x: -150, opacity: 0 }}
           transition={{ type: "spring", stiffness: 75 }}
-          className="w-full h-[450px] rounded flex items-center justify-center shadow-xl mb-8"
+          className="w-full h-[450px] rounded flex items-center justify-center relative shadow-xl mb-8"
         >
           <form
             onSubmit={(e) => handleRegister(e)}
@@ -78,6 +81,13 @@ const Register = () => {
               </Link>
             </div>
           </form>
+          {isLoading ? (
+            <div className="absolute flex items-center justify-center w-full h-full backdrop-blur-sm top-0 left-0 ">
+              <Loader color="black" />
+            </div>
+          ) : (
+            ""
+          )}
         </motion.div>
       </section>
     </main>

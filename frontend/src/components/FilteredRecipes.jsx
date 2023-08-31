@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react"
 import Card from "./Card"
-import data from "../data/recepies"
 import { AiOutlineCaretRight, AiFillCaretLeft } from "react-icons/ai"
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react"
 import { Autoplay } from "swiper/modules"
 
 import "swiper/css"
 import axios from "axios"
+import Loader from "./Loader"
 
 const FilteredRecipes = () => {
   const [recipes, setRecipes] = useState([])
+  // const [isLoading,setIsLoading] = useState(false)
+
   // const [foods, setFoods] = useState(data)
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -36,6 +38,7 @@ const FilteredRecipes = () => {
   return (
     <>
       <section className="w-full mt-8 mb-6">
+        
         <div className="w-[1200px] mx-auto rounded p-2 shadow-md flex justify-around items-center">
           <div className="flex">
             <button
@@ -127,12 +130,13 @@ const FilteredRecipes = () => {
             </div>
             {recipes.map((food) => (
               <SwiperSlide key={food._id}>
-                <Card data={food} />
+                <Card data={food}/>
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
       </section>
+      
     </>
   )
 }
@@ -155,6 +159,7 @@ const SlideButtons = () => {
       >
         <AiOutlineCaretRight className="text-white" />
       </button>
+   
     </div>
   )
 }

@@ -44,7 +44,7 @@ const SavedRecepies = () => {
               className="hover:scale-95 transition-all duration-300 mb-2"
               key={recipe}
             >
-              <Card data={savedRecipes} />
+              <Card data={savedRecipes} showSave={false} />
             </div>
           ))}
         </div>
