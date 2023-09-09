@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { FiFacebook, FiTwitter } from "react-icons/fi"
 import { FaPinterestP } from "react-icons/fa"
@@ -15,8 +15,8 @@ const Header = () => {
   const [cookies, setCookies] = useCookies(["access_token"])
   const [cookie, setUserName] = useCookies(["username"])
 
+  const [active, setActive] = useState(false)
   const navigate = useNavigate()
-  console.log()
 
   const nav_links = [
     {
@@ -48,7 +48,14 @@ const Header = () => {
     },
   ]
 
-  const [active, setActive] = useState(false)
+  const closeModalOnClickOutside = () => {
+    document.body.addEventListener("click", (e) => {
+      if (e.target.id !== "modelBtn" && active) {
+        setActive(false)
+      }
+    })
+  }
+  closeModalOnClickOutside()
 
   const handleLogout = () => {
     setCookies("access_token", "")
@@ -79,7 +86,7 @@ const Header = () => {
             {nav_links.map((link, index) => (
               <li key={index}>
                 <Link
-                  className="uppercase active:text-white active:bg-zinc-800 p-2 rounded text-[12px] mr-4 font-semibold"
+                  className="uppercase hover:bg-zinc-800 hover:text-white duration-300 transition-all p-2 rounded text-[12px] mr-4 font-semibold"
                   to={link.path}
                 >
                   {link.display}
@@ -106,13 +113,13 @@ const Header = () => {
 
             <div>
               {cookies.access_token ? (
-                <div className="flex gap-3">
+                <div className="flex gap-3 max-w-[100px]">
                   <button
                     onClick={() => setActive((prev) => !prev)}
-                    className="px-2 cursor-pointer bg-zinc-800 rounded text-white"
+                    className="px-2 w-full cursor-pointer bg-zinc-800 rounded text-white"
                   >
-                    <div className="p-2 rounded">
-                      <p>{cookie.username}</p>
+                    <div className="w-full p-2 rounded">
+                      <p id="modelBtn">{cookie.username}</p>
                     </div>
                   </button>
                 </div>
@@ -130,19 +137,21 @@ const Header = () => {
             </div>
             {active && cookies.access_token ? (
               <motion.div
-                animate={{ scale: 1 }}
-                initial={{ scale: 0 }}
+                animate={{ scale: 0.9 }}
+                initial={{ scale: 0.2 }}
                 transition={{
-                  type: "spring",
-                  stiffness: 85,
+                  ease: "linear",
+                  // type: "",
+                  duration: 0.12,
+                  // stiffness: 80,
                 }}
-                className="absolute top-[40px] right-[62px] shadow-2xl z-10 bg-zinc-800 px-3 py-4 justify-center items-center w-[220px] flex flex-col gap-2 rounded-tl-2xl rounded-bl-2xl rounded-br-2xl"
+                className="absolute top-[35px] right-[62px] shadow-2xl z-10 bg-white px-3 py-4 justify-center items-center w-[220px] flex flex-col gap-2 rounded-tl-2xl rounded-bl-2xl rounded-br-2xl"
               >
-                <h2 className="mt-2 py-2 text-white border-b border-b-white w-full text-center">
+                <h2 className="mt-2 py-2 text-zinc-800 border-b border-b-gray-400 w-full text-center">
                   {cookie.username}
                 </h2>
                 <Link
-                  className="mt-2 py-2 text-white border-b border-b-white w-full text-center"
+                  className="mt-2 py-2 text-zinc-800 border-b border-b-gray-400 w-full text-center"
                   to={"/savedrecepies"}
                 >
                   Saved Recipes
@@ -151,7 +160,7 @@ const Header = () => {
                   {cookies.access_token}
                 </h2> */}
                 <button
-                  className="text-zinc-800 mt-4 text-[12px] w-full bg-white p-2 rounded  mb-2"
+                  className="text-white mt-4 text-[12px] w-full bg-zinc-800 p-2 rounded  mb-2"
                   onClick={handleLogout}
                 >
                   Logout

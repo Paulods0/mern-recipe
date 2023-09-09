@@ -1,98 +1,140 @@
 import React from "react"
-import Main from "./Main"
-import footerImg from "../assets/images/footer3.jpg"
 
 import { Link } from "react-router-dom"
 import { FiFacebook, FiTwitter } from "react-icons/fi"
 import { FaPinterestP } from "react-icons/fa"
-// import { CiLogin } from "react-icons/ci"
+import { AiFillGithub } from "react-icons/ai"
+import { GiAngola } from "react-icons/gi"
+import { BiSolidCity } from "react-icons/bi"
+import { BsFillPersonFill } from "react-icons/bs"
+import { CgMail } from "react-icons/cg"
+import { BsLink45Deg } from "react-icons/bs"
 
 const nav_links = [
   {
     path: "/home",
-    display: "home",
+    display: "Home",
   },
   {
     path: "/allrecipes",
-    display: "all recepies",
+    display: "All recepies",
   },
   {
     path: "/createrecepies",
-    display: "create recepies",
+    display: "Create recepies",
   },
   {
     path: "/savedrecepies",
-    display: "saved recepies",
+    display: "Saved recepies",
   },
 ]
 
 const social_links = [
   {
     icon: <FiFacebook />,
-    path: "http://facebook.com",
+    display: "Facebook",
+    path: "http://www.facebook.com",
     color: "text-blue-500",
   },
   {
     icon: <FaPinterestP />,
-    path: "http://pinterest.com",
+    display: "Pinterest",
+    path: "http://www.pinterest.com",
     color: "text-red-400",
   },
   {
     icon: <FiTwitter />,
-    path: "http://x.com",
+    display: "Twitter",
+    path: "http://www.x.com",
     color: "text-blue-400",
+  },
+  {
+    icon: <AiFillGithub />,
+    display: "Github",
+    path: "http://www.github/Paulods0.com",
+    color: "text-black",
+  },
+]
+
+const contacts = [
+  {
+    Name: "Paulo Luguenda",
+    icon: <BsFillPersonFill />,
+  },
+  {
+    Country: "Angola",
+    icon: <GiAngola />,
+  },
+  {
+    City: "Luanda",
+    icon: <BiSolidCity />,
+  },
+  {
+    Email: "pauloluguenda0@gmail.com",
+    icon: <CgMail />,
   },
 ]
 
 const Footer = () => {
   return (
-    <div className="relative mt-12 w-full shadow-[2px_0_6px_3px_rgba(0,0,0,0.2)] ">
-      {/* <div className="absolute top-0 left-0 bg-black/20 w-full h-full"></div> */}
-      <div className="h-[340px] w-[1200px] mx-auto flex items-center justify-around flex-col">
-        <div className="w-full mt-8 flex items-center flex-col justify-center p-4  rounded-md">
-          <div className="flex gap-[6.5px] text-[20px] italic">
-            <h1 className="underline font-bold text-zinc-800">RECREATE</h1>
-            <span className=" text-black underline-none">A RECIPE</span>
-          </div>
-          <p className=" w-full text-black mt-4 p-3 shadow-lg rounded hover:scale-[1.1] duration-300 transition-all">
-            Figure out what is in your food! Have you ever looked at a
-            commercial food product and wondered how to make it? Not a problem.
-            Use this professional technique to recreate a recipe from any
-            nutrition label.
-          </p>
+    <div className="relative mt-12 w-full flex flex-col justify-center items-center py-4 shadow-[2px_0_6px_3px_rgba(0,0,0,0.2)] ">
+      <div className="w-[1200px] mx-auto flex items-start justify-around">
+        <div className="flex flex-col items-center justify-start">
+          <ul>
+            <h2 className="font-bold text-[18px]">Infos</h2>
+            {contacts.map((contact, index) => (
+              <li key={index}>
+                <p className="text-gray-400 text-[14px] flex gap-2 items-center">
+                  {Object.values(contact).filter(
+                    (value) => value === contact.icon
+                  )}
+                  {Object.keys(contact).filter((key) => key !== "icon")}:{" "}
+                  {Object.values(contact).filter(
+                    (values) => values !== contact.icon
+                  )}
+                </p>
+              </li>
+            ))}
+          </ul>
         </div>
-
-        <div className="w-full mt-6 flex justify-around gap-4 p-4 rounded shadow-lg hover:scale-[1.1] duration-300 transition-all">
-          <ul className="flex gap-6">
+        <div>
+          <h2 className="font-bold text-[18px]">Menu Links</h2>
+          <ul>
             {nav_links.map((link, index) => (
-              <Link
-                key={index}
-                className="text-[13px] underline"
-                to={link.path}
-              >
-                {link.display.toUpperCase()}
-              </Link>
-            ))}
-          </ul>
-
-          <ul className="flex gap-6">
-            {social_links.map((link, index) => (
-              <Link
-                key={index}
-                className={`${link.color} text-[16px]`}
-                to={link.path}
-              >
-                {link.icon}
-              </Link>
+              <li key={index}>
+                <Link
+                  to={link.path}
+                  className="text-gray-400 flex items-center text-[14px]"
+                >
+                  <BsLink45Deg /> {link.display}
+                </Link>
+              </li>
             ))}
           </ul>
         </div>
-        
-        <div className="mt-8 mb-4 ">
-          <p className="text-[12px]">
-            {" "}
-            &copy; {new Date().getFullYear()} Paulo Luguenda. All Rights
-            Reserved.
+        <div className="flex flex-col">
+          <h2 className="font-bold text-[18px]">Social Links</h2>
+          <ul>
+            {social_links.map((link, index) => (
+              <li key={index} className="flex gap-4 text-[14px] items-center">
+                <Link to={link.path} className={`${link.color}`}>
+                  {link.icon}
+                </Link>
+                <span>{link.display}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div className="mt-6 bo w-full text-center">
+        <div className="py-2 flex flex-col">
+          <p className="text-gray-400">
+            Cooking is your canvas; create a masterpiece with every dish. Cook
+            with passion, share with love, and savor life's delicious moments.
+          </p>
+          <p className="text-gray-400 text-[12px] mt-4">
+            &copy; 2023 All rights reserved. Developed by Paulo Luguenda with
+            love.
           </p>
         </div>
       </div>

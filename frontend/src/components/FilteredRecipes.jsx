@@ -10,9 +10,8 @@ import Loader from "./Loader"
 
 const FilteredRecipes = () => {
   const [recipes, setRecipes] = useState([])
-  // const [isLoading,setIsLoading] = useState(false)
 
-  // const [foods, setFoods] = useState(data)
+  
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -26,6 +25,9 @@ const FilteredRecipes = () => {
 
     fetchRecipes()
   }, [])
+  const showAllRecipes = () => {
+    setRecipes(recipes.map((recipe) => recipe))
+  }
 
   const filterByCategory = (category) => {
     setRecipes(
@@ -38,7 +40,6 @@ const FilteredRecipes = () => {
   return (
     <>
       <section className="w-full mt-8 mb-6">
-        
         <div className="w-[1200px] mx-auto rounded p-2 shadow-md flex justify-around items-center">
           <div className="flex">
             <button
@@ -92,11 +93,15 @@ const FilteredRecipes = () => {
             >
               Pasta
             </button>
+
             <select
               onChange={(e) => filterByCategory(e.target.value)}
               className="py-2 outline-none border-none px-2 bg-zinc-800 rounded text-white flex justify-around"
             >
-             
+              <option value="All" onChange={() => showAllRecipes()}>
+                All
+              </option>
+
               {recipes.map((option) => (
                 <option
                   value={option.category}
@@ -107,7 +112,6 @@ const FilteredRecipes = () => {
                 </option>
               ))}
             </select>
-            
           </div>
         </div>
       </section>
@@ -130,13 +134,12 @@ const FilteredRecipes = () => {
             </div>
             {recipes.map((food) => (
               <SwiperSlide key={food._id}>
-                <Card data={food}/>
+                <Card data={food} />
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
       </section>
-      
     </>
   )
 }
@@ -159,7 +162,6 @@ const SlideButtons = () => {
       >
         <AiOutlineCaretRight className="text-white" />
       </button>
-   
     </div>
   )
 }

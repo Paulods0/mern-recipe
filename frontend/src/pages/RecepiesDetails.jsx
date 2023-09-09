@@ -59,11 +59,11 @@ const RecepiesDetails = () => {
       >
         {/* {/**left */}
         <div className="flex flex-row w-[1200px]">
-          <section className=" w-[950px] h-full rounded-l">
+          <section className=" w-[750px] h-full rounded-l">
             <img
               src={image || null}
               alt={name}
-              className="w-full h-full rounded-l bg-cover"
+              className="w-full h-full rounded-l object-cover"
             />
           </section>
           {/**right */}
