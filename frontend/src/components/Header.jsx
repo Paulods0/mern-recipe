@@ -14,6 +14,7 @@ import Search from "./Search"
 const Header = () => {
   const [cookies, setCookies] = useCookies(["access_token"])
   const [cookie, setUserName] = useCookies(["username"])
+  const [cookiees, setProfileImage] = useCookies(["profileImage"])
 
   const [active, setActive] = useState(false)
   const navigate = useNavigate()
@@ -60,8 +61,12 @@ const Header = () => {
   const handleLogout = () => {
     setCookies("access_token", "")
     setUserName("username", "")
+
+    setProfileImage("profileImage", "")
+
     window.localStorage.removeItem("userID")
     window.localStorage.removeItem("username")
+    window.localStorage.removeItem("profilwImage")
     setActive(false)
     navigate("/login")
   }
@@ -113,23 +118,32 @@ const Header = () => {
 
             <div>
               {cookies.access_token ? (
-                <div className="flex gap-3 max-w-[100px]">
+                <div className="flex gap-3 w-[100px]">
                   <button
                     onClick={() => setActive((prev) => !prev)}
                     className="px-2 w-full cursor-pointer bg-zinc-800 rounded text-white"
                   >
-                    <div className="w-full p-2 rounded">
-                      <p id="modelBtn">{cookie.username}</p>
+                    <div className="w-full text-center p-2 rounded">
+                      <p className="text-center" id="modelBtn">
+                        {cookie.username}
+                      </p>
                     </div>
                   </button>
                 </div>
               ) : (
-                <div>
+                <div className="flex gap-3">
                   <Link
                     to="/login"
                     className="font-semibold flex active:bg-zinc-800 active:text-white p-2 rounded items-center text-[13px] gap-2"
                   >
                     Login
+                    <CiLogin />
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="font-semibold text-white bg-zinc-800 flex active:bg-white active:text-zinc-800 p-2 rounded items-center text-[13px] gap-2"
+                  >
+                    Register
                     <CiLogin />
                   </Link>
                 </div>
@@ -141,25 +155,42 @@ const Header = () => {
                 initial={{ scale: 0.2 }}
                 transition={{
                   ease: "linear",
-                  // type: "",
                   duration: 0.12,
-                  // stiffness: 80,
                 }}
-                className="absolute top-[35px] right-[62px] shadow-2xl z-10 bg-white px-3 py-4 justify-center items-center w-[220px] flex flex-col gap-2 rounded-tl-2xl rounded-bl-2xl rounded-br-2xl"
+                id="modelBtn"
+                className="absolute top-[45px] right-[-10px] border border-zinc-300 shadow-2xl z-10 bg-white px-3 py-4 justify-center items-center w-[270px] flex flex-col gap-2 rounded-tl-2xl rounded-bl-2xl rounded-br-2xl"
               >
-                <h2 className="mt-2 py-2 text-zinc-800 border-b border-b-gray-400 w-full text-center">
-                  {cookie.username}
-                </h2>
+                <section
+                  id="modelBtn"
+                  className="flex items-center justify-center py-3 gap-3 w-full border-b border-b-gray-400"
+                >
+                  <h2
+                    id="modelBtn"
+                    className="text-zinc-800 w-[80px] text-center"
+                  >
+                    {cookie.username}
+                  </h2>
+                  <div
+                    id="modelBtn"
+                    className="w-10 h-10 border border-zinc-800 rounded-full"
+                  >
+                    <img
+                      src={cookiees.profileImage ? cookiees.profileImage : ""}
+                      className="w-full h-full rounded-full object-cover"
+                      alt="profile-image"
+                    />
+                  </div>
+                </section>
                 <Link
+                  id="modelBtn"
                   className="mt-2 py-2 text-zinc-800 border-b border-b-gray-400 w-full text-center"
                   to={"/savedrecepies"}
                 >
                   Saved Recipes
                 </Link>
-                {/* <h2 className="text-white border-b border-b-white w-full text-center overflow-x-scroll">
-                  {cookies.access_token}
-                </h2> */}
+
                 <button
+                  id="modelBtn"
                   className="text-white mt-4 text-[12px] w-full bg-zinc-800 p-2 rounded  mb-2"
                   onClick={handleLogout}
                 >

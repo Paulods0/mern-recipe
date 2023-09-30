@@ -9,9 +9,13 @@ import Loader from "../components/Loader.jsx"
 const Login = () => {
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
-  const [_, setCookies] = useCookies(["access_token"])
-  const [cookie, setUserName] = useCookies(["username"])
   const [isLoading, setIsLoading] = useState(false)
+
+  const [user, setUserName] = useCookies(["username"])
+
+  const [profileImage, setProfileImage] = useCookies(["profileImage"])
+  
+  const [_, setCookies] = useCookies(["access_token"])
 
   const navigate = useNavigate()
 
@@ -29,20 +33,21 @@ const Login = () => {
         data
       )
       setIsLoading(false)
+
       setCookies("access_token", response.data.token)
       window.localStorage.setItem("userID", response.data.userID)
-        
+
       setUserName("username", response.data.username)
       window.localStorage.setItem("username", response.data.username)
 
-      // console.log(window.localStorage.getItem("username"))
-
+      if (response.data.profileImage) {
+        setProfileImage("profileImage", response.data.profileImage)
+        window.localStorage.setItem("profileImage", response.data.profileImage)
+      }
+      
       navigate("/")
       setName("")
       setPassword("")
-
-      console.log(response)
-      console.log(response)
     } catch (error) {
       console.error(error)
     }

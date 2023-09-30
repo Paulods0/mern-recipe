@@ -8,6 +8,7 @@ import { motion } from "framer-motion"
 import axios from "axios"
 import { useLocation } from "react-router-dom"
 import ErrorCard from "../components/ErrorCard"
+import Loader from "../components/Loader"
 
 const Results = () => {
   // const searchParams = new URLSearchParams(location.search)
@@ -16,21 +17,23 @@ const Results = () => {
   // const location = useLocation()
 
   const [searched, setSearched] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+
   const { nome } = useParams()
 
   useEffect(() => {
     const fetchByName = async () => {
+      setIsLoading(true)
       try {
         const response = await axios.get(
           `http://localhost:4000/api/recipe/${nome}`
         )
-        console.log(response.data.recipes)
         setSearched(response.data.recipes)
       } catch (error) {
         console.log(error)
       }
+      setIsLoading(false)
     }
-    console.log(searched)
     fetchByName()
   }, [nome])
 
@@ -40,7 +43,7 @@ const Results = () => {
         initial={{ x: -150, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 1 }}
-        className="w-full p-3 rounded shadow-xl h-[420px]"
+        className="w-full relative p-3 rounded shadow-xl h-[420px]"
       >
         <div className="flex gap-2">
           <h1 className="font-bold mb-12">Results for:</h1>
@@ -48,7 +51,7 @@ const Results = () => {
         </div>
         <div className="w-full h-full">
           <Swiper slidesPerView={3} direction="horizontal" spaceBetween={1}>
-            {searched.length === 0 ? (
+            {searched.length === 0 || searched[0] === "" ? (
               <div className="w-full py-4 h-full flex items-center justify-center text-center">
                 <ErrorCard />
               </div>
@@ -61,6 +64,13 @@ const Results = () => {
             )}
           </Swiper>
         </div>
+        {isLoading ? (
+          <div className="absolute flex z-10 items-center justify-center w-full h-full backdrop-blur-sm top-0 left-0 ">
+            <Loader color="black" />
+          </div>
+        ) : (
+          ""
+        )}
       </motion.div>
     </section>
   )

@@ -81,7 +81,7 @@ const Footer = () => {
       <div className="w-[1200px] mx-auto flex items-start justify-around">
         <div className="flex flex-col items-center justify-start">
           <ul>
-            <h2 className="font-bold text-[18px]">Infos</h2>
+            <h2 className="font-bold mb-4 text-[18px]">Infos</h2>
             {contacts.map((contact, index) => (
               <li key={index}>
                 <p className="text-gray-400 text-[14px] flex gap-2 items-center">
@@ -98,7 +98,7 @@ const Footer = () => {
           </ul>
         </div>
         <div>
-          <h2 className="font-bold text-[18px]">Menu Links</h2>
+          <h2 className="font-bold mb-4 text-[18px]">Menu Links</h2>
           <ul>
             {nav_links.map((link, index) => (
               <li key={index}>
@@ -113,26 +113,26 @@ const Footer = () => {
           </ul>
         </div>
         <div className="flex flex-col">
-          <h2 className="font-bold text-[18px]">Social Links</h2>
+          <h2 className="font-bold mb-4 text-[18px]">Social Links</h2>
           <ul>
             {social_links.map((link, index) => (
               <li key={index} className="flex gap-4 text-[14px] items-center">
                 <Link to={link.path} className={`${link.color}`}>
                   {link.icon}
                 </Link>
-                <span>{link.display}</span>
+                <span className="text-gray-400 text-[14px]">{link.display}</span>
               </li>
             ))}
           </ul>
         </div>
       </div>
-      <div className="mt-6 bo w-full text-center">
+      <div className="mt-12 bo w-full text-center">
         <div className="py-2 flex flex-col">
           <p className="text-gray-400">
             Cooking is your canvas; create a masterpiece with every dish. Cook
             with passion, share with love, and savor life's delicious moments.
           </p>
-          <p className="text-gray-400 text-[12px] mt-4">
+          <p className="text-gray-400 text-[12px] mt-10">
             &copy; 2023 All rights reserved. Developed by Paulo Luguenda with
             love.
           </p>

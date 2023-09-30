@@ -3,22 +3,31 @@ import { Link, useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import axios from "axios"
 import Loader from "../components/Loader"
+import profile02 from "../assets/images/profile02.png"
 
 const Register = () => {
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
-  const [isLoading, setIsLoading] = useState(false);
+  const [profileImage, setProfileImage] = useState("")
+
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
+
   const data = {
     name,
     password,
+    profileImage,
   }
 
   const handleRegister = async (e) => {
     e.preventDefault()
     setIsLoading(true)
     try {
-      await axios.post("http://localhost:4000/api/auth/register", data)
+      await axios.post("http://localhost:4000/api/auth/register", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       setIsLoading(false)
       navigate("/login")
       setName("")
@@ -34,21 +43,27 @@ const Register = () => {
           animate={{ x: 0, opacity: 1 }}
           initial={{ x: -150, opacity: 0 }}
           transition={{ type: "spring", stiffness: 75 }}
-          className="w-full h-[450px] rounded flex items-center justify-center relative shadow-xl mb-8"
+          className="w-full h-[480px] rounded flex items-center justify-center relative shadow-xl mb-8"
         >
           <form
             onSubmit={(e) => handleRegister(e)}
             className="flex w-[300px] items-center flex-col gap-2"
+            encType="multipart/form-data"
           >
             <h1 className="text-[24px] font-bold text-center mb-12">
               Register
             </h1>
-            <div className="relative  flex w-full flex-col shadow-md rounded p-3 text-[12px]">
+
+            <div className="relative justify-center items-center w-full rounded-full flex flex-col shadow-md p-3 text-[12px]">
               <input
-                className="w-full h-full text-zinc-800 placeholder:text-zinc-800 outline-none border-none"
+                accept="image/"
+                className="file:hidden w-full h-full cursor-pointer"
                 type="file"
+                name="profileImage"
+                onChange={(e) => setProfileImage(e.target.files[0])}
               />
             </div>
+
             <div className="relative  flex w-full flex-col shadow-md rounded p-3 text-[12px]">
               <input
                 className="w-full h-full text-zinc-800 placeholder:text-zinc-800 outline-none border-none"

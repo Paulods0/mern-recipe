@@ -14,7 +14,13 @@ const Search = () => {
   }
 
   const handleSearch = () => {
-    const encodedURI = encodeURIComponent(searchText)
+    let firstLetter = searchText.slice(0, 1)
+    let lastLetters = searchText.slice(1, searchText.length)
+    let newSearchInput = firstLetter.toUpperCase() + lastLetters
+    if (newSearchInput === "") {
+      return alert("You cannot search for an empty recipe!")
+    }
+    const encodedURI = encodeURIComponent(newSearchInput)
     navigate(`/results/${encodedURI}`)
     setSearchText("")
   }
